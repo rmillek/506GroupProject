@@ -1,0 +1,104 @@
+---
+title: '506 Project: Group 11'
+author: "Alex Kellner, Reed Millek, Zhaobo Wu"
+date: "November 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Linear Discriminant Analysis
+
+### What is Linear Discriminant Analysis?
+
+Linear Discriminant Analysis (LDA) is most commonly used as dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications. The goal is to project a dataset onto a lower-dimensional space with good class-separability in order avoid overfitting.
+
+### Dataset: Geometric Properties of Wheat Seeds
+
+For our data analysis, we will be using the "Seeds" dataset, found on [UC Irvine's Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/seeds#). This dataset is comprised observations of kernels from 3 different varieties of wheat: Kama, Rosa and Canadian. Each group has randomly selected 70 observations, for a total of 210 observations. Aside from the grouping variable, there are 7 geometrical measurments given to each observation:
+
+1. area = Area
+2. peri - Perimeter
+3. comp = Compactness (C = 4\*pi\*A/P^2)
+4. l = Length of kernel
+5. w = Width of kernel
+6. Asym = Asymmetry coefficient
+7. lgroove = Length of kernel groove
+
+We will be using each qualitative attribute to classify each group, and once a fit model has been obtained, make predictions on how other kernels of certain attributes might be grouped.
+
+**R stuff**
+
+There are a few key libraries to install and load for our analysis. To perform Linear Discriminant Analysis in R we will make use of the `lda` function
+in the package `MASS`. We will also use `car` and `ggplot2` for graphing purposes.
+
+```{r libraries, echo=TRUE}
+library(car)
+library(MASS)
+library(ggplot2)
+```
+
+### Description of Data
+
+After reading in our dataset and grouping our catagorical variable, we can view the summaries of our variables of interest using the `summary` function.
+
+
+
+```{r summary, echo=TRUE}
+seeds = read.csv("./seeds.csv", sep="\t", header=TRUE)
+seeds$group = as.factor(seeds$group)
+levels(seeds$group) = c("Kama", "Rosa", "Canadian")
+summary(seeds)
+scatterplotMatrix(seeds[1:7])
+```
+
+The purpose of linear discriminant analysis (LDA) in this example is to find the linear combinations of the original variables (the 7 geometric properties) that gives the best possible separation between the groups (wheat varieties) in our data set.
+
+If we want to separate the wines by cultivar, the wines come from three different cultivars, so the number of groups is $G=3$, and the number of variables is $p=7$. The maximum number of useful discriminant functions that can separate the wheat types by geometric properties is the minimum of $G-1$ and $p$, and so in this case it is the minimum of 2 and 7, which is 2. Thus, we can find at most 2 useful discriminant functions to classify our wheat types.
+
+### Train/Test Sequence
+
+In order to use LDA, we need to first split the data into a part used to train the classifier, and another part that will be used to test the classifier. For this example we will try an 70:30 split
+
+```{r set_train, echo=TRUE}
+set.seed(123) 
+seedss = sample.int(n = nrow(seeds), size = floor(.7*nrow(seeds)), replace = F)
+train = seeds[seedss, ]
+test  = seeds[-seedss, ]
+```
+
+We are then able to train our classifier in the following way:
+
+```{r train, echo=TRUE}
+lseeds = lda(group~., train)
+lseeds
+```
+
+This means that the first discriminant function is a linear combination of the variables: $$0.166*Area+3.299*Perimeter...+3.144*Groove$$.
+
+The "proportion of trace" that is printed when you type "lseeds" (the variable returned by the `lda` function) is the proportion of between-class variance that is explained by successive discriminant functions.
+
+Now with our train data model, we can predict our classifications with our test data:
+
+```{r test, echo=TRUE}
+lseeds.values = predict(lseeds, test[,1:7])
+```
+
+This will make predictions on where each of these observations should be grouped, based only on their qualitative attributes.
+
+```{r plot, echo=TRUE}
+plot.data = data.frame(LD1=lseeds.values$x[,1], LD2=lseeds.values$x[,2], WheatType=test$group)
+head(plot.data)                       
+p <- ggplot(data=plot.data, aes(x=LD1, y=LD2)) +
+  geom_point(aes(color=WheatType)) +
+  theme_bw()
+p
+```
+
+We can see that the wheat types are well separated in the scatterplot. The first discriminant function (x-axis) separates Rosa from the other types very well, but does not perfectly separate Kama and Canadian.
+
+The second discriminant function (y-axis) achieves a good separation of Kama and Canadian, and a fair separation of Rosa and Kama, although it is not totally perfect, and Rosa and Canadian aren't well separated either.
+
+To achieve a very good separation of the three types, it would be best to use both the first and second discriminant functions together, as we can see using these two dimensions separates the classifications reasonably well.
