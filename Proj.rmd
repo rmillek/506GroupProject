@@ -56,7 +56,7 @@ scatterplotMatrix(seeds[1:7])
 
 The purpose of linear discriminant analysis (LDA) in this example is to find the linear combinations of the original variables (the 7 geometric properties) that gives the best possible separation between the groups (wheat varieties) in our data set.
 
-If we want to separate the wines by cultivar, the wines come from three different cultivars, so the number of groups is $G=3$, and the number of variables is $p=7$. The maximum number of useful discriminant functions that can separate the wheat types by geometric properties is the minimum of $G-1$ and $p$, and so in this case it is the minimum of 2 and 7, which is 2. Thus, we can find at most 2 useful discriminant functions to classify our wheat types.
+The number of groups is $G=3$, and the number of variables is $p=7$. The maximum number of useful discriminant functions that can separate the wheat types by geometric properties is the minimum of $G-1$ and $p$, and so in this case it is the minimum of 2 and 7, which is 2. Thus, we can find at most 2 useful discriminant functions to classify our wheat types.
 
 ### Train/Test Sequence
 
@@ -76,7 +76,7 @@ lseeds = lda(group~., train)
 lseeds
 ```
 
-This means that the first discriminant function is a linear combination of the variables: $$0.166*Area+3.299*Perimeter...+3.144*Groove$$.
+This means that the first discriminant function is a linear combination of the variables: $$0.166*Area+3.300*Perimeter...+3.144*Groove$$.
 
 The "proportion of trace" that is printed when you type "lseeds" (the variable returned by the `lda` function) is the proportion of between-class variance that is explained by successive discriminant functions.
 
