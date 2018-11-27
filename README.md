@@ -15,4 +15,4 @@ install_github(hemken/Statamarkdown)
 
 Also note that knitting the RMarkdown file currently requires that the user works on a machine with STATA installed. The path to STATA may need to be changed to run properly.
 
-TO DO: Make file easier to knit without additional downloads, clean up mild differences between languages, expand introduction and consider adding conclusion
+TO DO: Make file easier to knit without additional downloads, clean up mild differences between languages, add references, expand introduction and consider adding conclusion
