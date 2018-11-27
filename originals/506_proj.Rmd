@@ -74,7 +74,7 @@ proc means data=seeds_train n mean std;
 run;
 ```
 
-Group 1 is Kama; Group 2 is Rose; Group 3 is Canadian.
+Group 1 is Kama; Group 2 is Rose; Group 3 is Canadian. The table below shows the mean of each predictors by different groups. Several variables have clear differences of means for different groups.
 
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
