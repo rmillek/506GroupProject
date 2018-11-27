@@ -4,7 +4,7 @@ author: "Group 11"
 output: html_document
 ---
 
-- Import data:
+- Import data to SAS:
 
 ```{}
 /* file name */
@@ -96,7 +96,7 @@ knitr::include_graphics("cor.png")
 
 $~$
 
-- Disvriminant Analysis (using "discrim" function):
+- Discriminant Analysis (using "discrim" function):
 
 ```{}
 /* analysis */
@@ -110,7 +110,8 @@ run;
 knitr::include_graphics("a_1.png")
 ```
 
-There are three groups which indicates that the maximum discriminant dimensions is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
+There are three groups which indicates that the number of discriminant dimensions is 3-1 which is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
+
 
 $~$
 
@@ -131,6 +132,12 @@ knitr::include_graphics("a_9.png")
 ```{r echo=FALSE, out.width = '35%', fig.align='center'}
 knitr::include_graphics("a_10.png")
 ```
+
+The two discrimant functions are (based on the standardized coefficients):
+
+discriminant_1 = -0.301*Area + 0.379*Perimeter + ... + 0.821*Groove.
+
+discriminant_2 = 4.103*Area + -4.631*Perimeter + ... + 1.694*Groove.
 
 $~$
 
