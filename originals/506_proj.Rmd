@@ -4,7 +4,7 @@ author: "Group 11"
 output: html_document
 ---
 
-- Import data to SAS:
+### Import data to SAS:
 
 ```{}
 /* file name */
@@ -18,6 +18,8 @@ run;
 ```
 
 $~$
+
+### Train/Test
 
 - Using "train and test split" with ratio 7:3 to create training and testing datasets:
 
@@ -44,7 +46,7 @@ run;
 
 $~$
 
-- Summary of training dataset:
+### Summary of training dataset:
 
 ```{}
 /* summary of training dataset*/
@@ -62,7 +64,7 @@ There are 147 observations in the training dataset.
 
 $~$
 
-- Summary of training dataset by group:
+### Summary of training dataset by group:
 
 ```{}
 /* summary of training dataset by group*/
@@ -81,7 +83,7 @@ knitr::include_graphics("train_sum_group.png")
 
 $~$
 
-- Correlation between predictors:
+### Correlation between predictors:
 
 ```{}
 /* correlation */
@@ -96,7 +98,7 @@ knitr::include_graphics("cor.png")
 
 $~$
 
-- Discriminant Analysis (using "discrim" function):
+### Discriminant Analysis (using "discrim" function):
 
 ```{}
 /* analysis */
@@ -135,9 +137,9 @@ knitr::include_graphics("a_10.png")
 
 The two discrimant functions are (based on the standardized coefficients):
 
-discriminant_1 = -0.301*Area + 0.379*Perimeter + ... + 0.821*Groove.
+$discriminant_1 = -0.301*Area + 0.379*Perimeter + ... + 0.821*Groove$
 
-discriminant_2 = 4.103*Area + -4.631*Perimeter + ... + 1.694*Groove.
+$discriminant_2 = 4.103*Area + -4.631*Perimeter + ... + 1.694*Groove$
 
 $~$
 
@@ -153,7 +155,7 @@ knitr::include_graphics("a_4.png")
 
 $~$
 
-- Plot the classification:
+### Plot the classification:
 
 ```{}
 /* plot */
