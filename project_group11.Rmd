@@ -214,7 +214,8 @@ count if outcome != group
 We see that of the 63 observations in the test set, only 3 were incorrectly predicted by our trained LDA model. As such, the prediction error here is only 4.76%. Hence, the LDA approach appears to work well for this data, which is supported not only by the low prediction error, but also by the plot, which shows fairly clear separation for the seed varieties.
 
 ### SAS
-- Import data:
+
+#### Import data to SAS
 
 ```{}
 /* file name */
@@ -228,6 +229,8 @@ run;
 ```
 
 $~$
+
+#### Train/Test
 
 - Using "train and test split" with ratio 7:3 to create training and testing datasets:
 
@@ -254,7 +257,7 @@ run;
 
 $~$
 
-- Summary of training dataset:
+#### Summary of training dataset
 
 ```{}
 /* summary of training dataset*/
@@ -272,7 +275,7 @@ There are 147 observations in the training dataset.
 
 $~$
 
-- Summary of training dataset by group:
+#### Summary of training dataset by group
 
 ```{}
 /* summary of training dataset by group*/
@@ -282,7 +285,7 @@ proc means data=seeds_train n mean std;
 run;
 ```
 
-Group 1 is Kama; Group 2 is Rose; Group 3 is Canadian.
+Group 1 is Kama; Group 2 is Rose; Group 3 is Canadian. The table below shows the mean of each predictors by different groups. Several variables have clear differences of means for different groups.
 
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
@@ -291,7 +294,7 @@ knitr::include_graphics("train_sum_group.png")
 
 $~$
 
-- Correlation between predictors:
+#### Correlation between predictors
 
 ```{}
 /* correlation */
@@ -306,7 +309,7 @@ knitr::include_graphics("cor.png")
 
 $~$
 
-- Analysis (using "discrim" function):
+#### Discriminant Analysis (using "discrim" function)
 
 ```{}
 /* analysis */
@@ -320,7 +323,8 @@ run;
 knitr::include_graphics("a_1.png")
 ```
 
-There are three groups which indicates that the maximum discriminant dimensions is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). The canonical correlations for the two dimensions 0.93 and 0.87.
+There are three groups which indicates that the number of discriminant dimensions is 3-1 which is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
+
 
 $~$
 
@@ -342,6 +346,12 @@ knitr::include_graphics("a_9.png")
 knitr::include_graphics("a_10.png")
 ```
 
+The two discrimant functions are (based on the standardized coefficients):
+
+$discriminant_1 = -0.301*Area + 0.379*Perimeter + ... + 0.821*Groove$
+
+$discriminant_2 = 4.103*Area + -4.631*Perimeter + ... + 1.694*Groove$
+
 $~$
 
 The two tables below are the summary tables of training and tesing dataset. Based on these two tables, we can notice that the training error and testing error are both very small. The accuracy is almost 1. The model predicts the data well.
@@ -356,7 +366,7 @@ knitr::include_graphics("a_4.png")
 
 $~$
 
-- Plot the classification:
+#### Plot the classification
 
 ```{}
 /* plot */
@@ -386,3 +396,6 @@ knitr::include_graphics("plot_da.png")
 ```
 
 From the plot, we can know that two discriminant dimensions can classify groups very well. We can notice that "can1" can seperate group 2 from other two groups and "can2" can seperate group 1 and group 3 well.
+
+
+
