@@ -41,5 +41,6 @@ plot.data = data.frame(LD1=lseeds.values$x[,1], LD2=lseeds.values$x[,2],
 head(plot.data)                       
 p = ggplot(data=plot.data, aes(x=LD1, y=LD2)) +
   geom_point(aes(color=WheatType)) +
-  theme_bw()
+  ggtitle("Discriminant Scores") +
+  theme(plot.title = element_text(hjust = 0.5)) 
 p
