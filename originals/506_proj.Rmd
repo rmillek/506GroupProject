@@ -96,7 +96,7 @@ knitr::include_graphics("cor.png")
 
 $~$
 
-- Analysis (using "discrim" function):
+- Disvriminant Analysis (using "discrim" function):
 
 ```{}
 /* analysis */
@@ -110,7 +110,7 @@ run;
 knitr::include_graphics("a_1.png")
 ```
 
-There are three groups which indicates that the maximum discriminant dimensions is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). The canonical correlations for the two dimensions 0.93 and 0.87.
+There are three groups which indicates that the maximum discriminant dimensions is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
 
 $~$
 
