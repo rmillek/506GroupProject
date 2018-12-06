@@ -132,7 +132,7 @@ As we see from the table, only 1 of the 63 observations in our test data was inc
 
 #### Description of Data
 
-Now, we perform our analysis using STATA. First, we read in the Seeds data set and obtain some summary statistics to get an intial understanding of the data with which we will be working: 
+Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is so additional step to perform there. We then obtain some summary statistics with "summary" to get an intial understanding of the data with which we will be working: 
 ```{}
 // import the seeds data from local directory, relabel, and summarize
 import delimited seeds.csv
@@ -143,7 +143,7 @@ summarize area peri comp l w asym lgroove
 knitr::include_graphics("sum_stata.png")
 ```
   
-Next, we create a matrix of graphs or correlations between the potential explanatory variables to gain an initial understanding of how they are related:  
+Next, we create a matrix of graphs of correlations using "graph matrix" to see correlations between the potential explanatory variables to gain an initial understanding of how they are related:  
   
 ```{}
 // graph correlations between the variables of interest
@@ -154,15 +154,15 @@ graph matrix area peri comp l w asym lgroove
 knitr::include_graphics("cor_stata.png")
 ```
   
-We see some strong correlations in the predictors, as there are several pairs of explanatory variables that have a reasonbly strong, approximately linear correlation.  
+We see some strong correlations in the predictors, as there are several pairs of explanatory variables that have a reasonbly strong, approximately linear correlation.    
 We should note that the purpose of the linear disciminant analysis (LDA) in this example is primarily classification. We are hoping to find linear combinations of the 7 potential predictors in the data set that yield the best possible separation among seeds based on their wheat variety. In other words, we want the best separation such that each group of seeds can be identified based on their other characteristics.
 
 Note that we want to separate the seeds by their wheat variety. There are three possible wheat varieties, so the number of groups here is *G* = 3, and the number of possible predictors is *p* = 7. We have that the maximum number of useful discriminant functions that can separate the seeds by wheat variety is the minimum of *G - 1* and *p*, which in this cases would be *G - 1* or 2. Hence, we can find at most two useful discriminant functions to classify the seeds by wheat variety.
 
 #### Train/Test Sequence
 
-To perform an LDA analysis, it is necessary to split the data into a training set and a test set such that the performance of the LDA functions can be measured. To do this, we select random entries from the data set such that 70% of the data can be used for training and the remaining 30% can be used for testing:  
-
+To perform an LDA analysis, it is necessary to split the data into a training set and a test set such that the performance of the LDA functions can be measured. To do this, we select random entries from the data set such that 70% of the data can be used for training and the remaining 30% can be used for testing. We use "generate random" and "sort random" followed by "generate trainsamp" to obtain random indices in create a training set composed of 70% of the data, saving the remaining 30% separately into a test set:
+  
 ```{}
 // separate into training and test set
 set seed 123
@@ -180,7 +180,7 @@ restore
 keep if trainsamp
 ```
 
-We then use the training set to perform our LDA analysis:  
+We then use the "candisc" function on our training set to perform our LDA analysis:  
   
 ```{}
 // perform LDA analysis
@@ -192,16 +192,16 @@ knitr::include_graphics("lda_stata1.png")
 knitr::include_graphics("lda_stata2.png")
 ```
   
-For our example, there are two discriminant dimensions. The F-ratio tests in the table labeled "Canonical linear discrimnant analysis" are both significant, which indicates that both dimensions are needed to describe the differences between the seeds.  
+As seen above, STATA provides a considerable amount of output for the LDA Analysis from the function "candisc." For our purposes here, the tables we are most concerned with are the "Canonical Linear Discriminant Analysis" table and the "Standardized canonical discriminant function coefficients" table. The "Canonical Linear Discriminant Analysis" table indicates how many discriminant functions are necessary here, and the "Standardized canonical discriminant function coefficients" table yields the (standardized) coefficient estimates for our LDA functions. We see from the first table that there are two discriminant dimensions, and the F-ratio tests both are significant. This indicates that both dimensions are needed to describe the differences between the seeds.  
 
-The next table, labeled "Standardized canonical discriminant function coefficients" gives us our two discriminant functions, estimated from the training data, which would then be:
+From the next table, then, our two discriminant functions, estimated from the training data, are:
 $$-0.494*Area+1.997*Perimeter...+.721*Groove$$
 and:
 $$4.888*Area+-4.471*Perimeter...+1.598*Groove$$
   
-The remaining output yields means and classification percentages (i.e. the proportion classified correctly) for the training data.  
+The other tables in the "candisc" output yield means and classification percentages (i.e. the proportion classified correctly) for the training data. 
 
-Now, to visualize the separation, we have:
+Now, to visualize the separation, we use the function "scoreplot." This function displays the test data, with the first discriminant function on the x-axis and the second discriminant funciton on the y-axis. The observations are then labeled according to seed type. To make the output more readable, we use the "label"" function to relabel the observations such that they are only displayed as the first letter of the seed variety (i.e. "C" for Canadian). We then have:
 
 ```{}
 // change labels for future plotting
@@ -218,7 +218,7 @@ knitr::include_graphics("test_stata.png")
 We see that the first discriminant function appears to separate Rosa seeds from the other types well, though it does not seems to separate Canadian and Kama seeds very much.  
 The second discriminant funciton appears to separate the Kama seeds fairly well from the others, but Rosa and Canadian seeds are not well-seperated. The plot suggests that both discriminant functions are necessary here to differentiate between the seed types.  
 
-Finally, we apply our estimated functions from the training data to the test data to get an idea of the prediction error that comes from this LDA model. The code below will yield the number of observations in the test set that were misclassified:  
+Finally, we apply our estimated functions from the training data to the test data to get an idea of the prediction error that comes from this LDA model. The code below will yield the number of observations in the test set that were misclassified. We use the "predict" function, which will apply our LDA model to the test.dta data set to predict see variety. Then, we count the number of seeds that were misclassified using "count if":  
 
 ```{}
 // calculate prediction error by finding incorrect predictions for test set
@@ -228,7 +228,7 @@ label values outcome labseed
 count if outcome != group
 ```
   
-Running the code above yields a results of 3, indicating that of the 63 observations in the test set, only 3 were incorrectly predicted by our trained LDA model. As such, the prediction error here is only 4.76%. Hence, the LDA approach appears to work well for this data, which is supported not only by the low prediction error, but also by the plot, which shows fairly clear separation for the seed varieties.
+Running the code above yields a result of 3, indicating that of the 63 observations in the test set, only 3 were incorrectly predicted by our trained LDA model. As such, the prediction error here is only 4.76%. Hence, the LDA approach appears to work well for this data, which is supported not only by the low prediction error, but also by the plot, which shows fairly clear separation for the seed varieties.
 
 ### SAS
 
