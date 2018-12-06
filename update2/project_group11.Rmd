@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### What is Linear Discriminant Analysis?
 
-Linear Discriminant Analysis (LDA) is most commonly used as dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications. The goal is to project a dataset onto a lower-dimensional space with good class-separability in order avoid overfitting.
+Linear Discriminant Analysis (LDA) is commonly used as dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications. The goal of LDA is to find discriminant functions that are the linear combination of independent continuous variables that will group two or more categories of the dependent variable the in best possible way. It helps one to examine whether significant differences exist among the groups, in terms of the independent variables. It also evaluates how accurate the process of the classification is.
 
 ### Dataset: Geometric Properties of Wheat Seeds
 
@@ -39,10 +39,11 @@ For more information on this topic, as well as helpful STATA coding tips, visit 
 ### R
 
 There are a few key libraries to install and load for our analysis. To perform Linear Discriminant Analysis in R we will make use of the `lda` function
-in the package `MASS`. We will also use `ggplot2` and `car` for graphing purposes.
+in the package `MASS`. We will also use `candisc` for standardization, and `ggplot2` and `car` for graphing purposes.
 
-```{r libraries, echo=TRUE}
+```{r libraries, echo=TRUE, message=FALSE}
 library(MASS)
+library(candisc)
 library(ggplot2)
 library(car)
 ```
@@ -83,6 +84,17 @@ lseeds
 
 This means that the first discriminant function is a linear combination of the variables: $$0.166*Area+3.300*Perimeter+...+3.144*Groove$$.
 and the second is : $$4.623*Area-9.244*Perimeter+...+6.846*Groove$$
+
+We can also see what standardize our data as such:
+
+```{r standard, echo=TRUE}
+x=lm(cbind(area,peri,comp,l,w,Asym,lgroove)~group, train)
+y=candisc(x, terms="Groups")
+summary(y)
+```
+
+This makes our first standardized function to be: $$0.197*Area+1.768*Perimeter+...+0.713*Groove$$.
+and the second is: $$5.486*Area-4.953*Perimeter+...+1.553*Groove$$
 
 Now with our train data model, we can predict our classifications with our test data:
 
