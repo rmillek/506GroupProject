@@ -84,7 +84,7 @@ scatterplotMatrix(seeds[1:7])
 
 We notice through the scatterplot matrix that some variables are collinear with each other, especially the variables `area` and `peri` with `l` and `w`. This makes sense intuitively, as we use length and width to find the area and perimeter. Normally this would be a problem, but as our goal is to use all given data for classification purposes only, then as long as we achieve high accuracy on our testing procedure, we can ignore this issue.
 
-We want to find the linear combinations of the variables which can provide the best separation to the three different kinds of seeds. In finding how many combinations are needed to best differentiate our classifications, we take the number of groups and variables into account. The number of groups is $3$, and the number of variables is $7$. The greatest amouont of useful discriminant functions that can separate the wheat types by geometric properties is the lesser of "number of groups minus one" and "number of predictiors". As a result, we should find 2 useful discriminant functions to classify our wheat types.
+We want to find the linear combinations of the variables which can provide the best separation to the three different kinds of seeds. In finding how many combinations are needed to best differentiate our classifications, we take the number of groups and variables into account. We notice that the number of groups is $3$ and the number of variables is $7$. The greatest amouont of useful discriminant functions that can separate the wheat types by geometric properties is the lesser of "number of groups minus one" and "number of predictiors". As a result, the discriminant functions that we can expect to use to classify our wheat types is 2.
 
 
 #### Train/Test Sequence
