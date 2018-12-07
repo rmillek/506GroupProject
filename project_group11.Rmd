@@ -49,7 +49,7 @@ Note that the only major data processing change to the data set was to add colum
 
 ### Analysis
 
-For this analysis, we present three tutorials, each using a different statisitcal software. The languages presented here are R, STATA, and SAS.  
+For this analysis, we present three tutorials, each using a different statistical software. The languages presented here are R, STATA, and SAS.  
 
 For our actual tutorials, we will start by demonstrating how to load the Seeds data in each language and how to display some basic summary statistics. We will then split the data into a training and a test set through randomization, with a roughly 70-30 split. The training set will then be used to estimate discriminant functions using the independent variables from the Seeds data set. We can then use the discriminant functions from the training set to classify observations in the test set based on their values for the independent variables. This will allow us to estimate prediction error, as we will compare the predicted classes from the LDA model to the actual classes of observations in the test set.   
 
@@ -86,7 +86,7 @@ scatterplotMatrix(seeds[1:7])
 
 We notice through the scatterplot matrix that some variables are collinear with each other, especially the variables `area` and `peri` with `l` and `w`. This makes sense intuitively, as we use length and width to find the area and perimeter. Normally this would be a problem, but as our goal is to use all given data for classification purposes only, then as long as we achieve high accuracy on our testing procedure, we can ignore this issue.
 
-We want to find the linear combinations of the variables which can provide the best separation to the three different kinds of seeds. In finding how many combinations are needed to best differentiate our classifications, we take the number of groups and variables into account. We notice that the number of groups is $3$ and the number of variables is $7$. The greatest amouont of useful discriminant functions that can separate the wheat types by geometric properties is the lesser of "number of groups minus one" and "number of predictiors". As a result, the discriminant functions that we can expect to use to classify our wheat types is 2.
+We want to find the linear combinations of the variables which can provide the best separation to the three different kinds of seeds. In finding how many combinations are needed to best differentiate our classifications, we take the number of groups and variables into account. We notice that the number of groups is $3$ and the number of variables is $7$. The greatest amount of useful discriminant functions that can separate the wheat types by geometric properties is the lesser of "number of groups minus one" and "number of predictors". As a result, the discriminant functions that we can expect to use to classify our wheat types is 2.
 
 
 #### Train/Test Sequence
@@ -157,7 +157,7 @@ As we see from the table, only 1 of the 63 observations in our test data was inc
 
 #### Description of Data
 
-Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is no additional step to perform there. We then obtain some summary statistics with "summarize" to get an intial understanding of the data with which we will be working: 
+Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is no additional step to perform there. We then obtain some summary statistics with "summarize" to get an initial understanding of the data with which we will be working: 
 ```{}
 // import the seeds data from local directory, relabel, and summarize
 import delimited seeds.csv
@@ -181,7 +181,7 @@ knitr::include_graphics("stata_pics/cor_stata.png")
   
 We see some strong correlations in the predictors, as there are several pairs of explanatory variables that have a reasonably strong, approximately linear correlation.   
 
-We should note that the idea of the linear disciminant analysis (LDA) in this analysis is primarily classification. We are hoping to find linear combinations of the 7 potential predictors in the data set that yield the best possible separation among seeds based on their wheat variety. In other words, we want the best separation such that each group of seeds can be identified based on their other characteristics.
+We should note that the idea of the linear discriminant analysis (LDA) in this analysis is primarily classification. We are hoping to find linear combinations of the 7 potential predictors in the data set that yield the best possible separation among seeds based on their wheat variety. In other words, we want the best separation such that each group of seeds can be identified based on their other characteristics.
 
 Note that we want to separate the seeds by their wheat variety. There are three possible wheat varieties, so the number of groups here is 3, and the number of possible predictors is 7. Since the maximum number of significant discriminant functions that we can have is the minimum of "number of groups minus one" and "number of predictors", there are at most two discriminant functions that can be used to classify the seeds in this analysis.
 
@@ -227,7 +227,7 @@ $$4.888*Area+-4.471*Perimeter...+1.598*Groove$$
   
 The other tables in the "candisc" output yield means and classification percentages (i.e. the proportion classified correctly) for the training data. 
 
-Now, to visualize the separation, we use the function "scoreplot." This function displays the test data, with the first discriminant function on the x-axis and the second discriminant funciton on the y-axis. The observations are then labeled according to seed type. To make the output more readable, we use the "label"" function to relabel the observations such that they are only displayed as the first letter of the seed variety (i.e. "C" for Canadian). We then have:
+Now, to visualize the separation, we use the function "scoreplot." This function displays the test data, with the first discriminant function on the x-axis and the second discriminant function on the y-axis. The observations are then labeled according to seed type. To make the output more readable, we use the "label"" function to relabel the observations such that they are only displayed as the first letter of the seed variety (i.e. "C" for Canadian). We then have:
 
 ```{}
 // change labels for future plotting
@@ -242,7 +242,7 @@ knitr::include_graphics("stata_pics/test_stata.png")
 ```
   
 We see that the first discriminant function appears to separate Rosa seeds from the other types well, though it does not seems to separate Canadian and Kama seeds very much.  
-The second discriminant funciton appears to separate the Kama seeds fairly well from the others, but Rosa and Canadian seeds are not well-seperated. The plot suggests that both discriminant functions are necessary here to differentiate between the seed types.  
+The second discriminant function appears to separate the Kama seeds fairly well from the others, but Rosa and Canadian seeds are not well-separated. The plot suggests that both discriminant functions are necessary here to differentiate between the seed types.  
 
 Finally, we apply our estimated functions from the training data to the test data to get an idea of the prediction error that comes from this LDA model. The code below will yield the number of observations in the test set that were misclassified. We use the "predict" function, which will apply our LDA model to the test.dta data set to predict see variety. Then, we count the number of seeds that were misclassified using "count if":  
 
@@ -401,7 +401,7 @@ $discriminant_2 = 4.310*Area + -4.142*Perimeter + ... + 1.360*Groove$
 
 $~$
 
-The table below is the summary tables of the tesing dataset classified using the discriminant functions generated by the training set. There are 63 observations in this dataset. Based on this table, we can notice that only two oberservations are classified incorrectly and the testing error (3.17%) is is very small. The accuracy is almost 1. The model that we have predicts the testing data very well.
+The table below is the summary tables of the testing dataset classified using the discriminant functions generated by the training set. There are 63 observations in this dataset. Based on this table, we can notice that only two observations are classified incorrectly and the testing error (3.17%) is is very small. The accuracy is almost 1. The model that we have predicts the testing data very well.
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
 knitr::include_graphics("sas_pics/test_table.png")
