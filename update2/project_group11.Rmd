@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE,warning = FALSE)
 
 ### What is Linear Discriminant Analysis?
 
-Linear Discriminant Analysis (LDA) is one of the most commonly used techniques nowadays for several applications, such as "Decision Making", "Classification", and "Demension Reduction". The main goal of LDA is to find the discriminant functions which are the linear combinations of independent variables that will group two or more categories of the dependent variable in the best possible way. It helps one to examine whether significant differences exist among the groups, in terms of the independent variables. It also evaluates how accurate the process of the classification is.
+Linear Discriminant Analysis (LDA) is one of the most commonly used techniques nowadays for several applications, such as "Decision Making", "Classification", and "Dimension Reduction". The main goal of LDA is to find the discriminant functions which are the linear combinations of independent variables that will group two or more categories of the dependent variable in the best possible way. It helps one to examine whether significant differences exist among the groups, in terms of the independent variables. It also evaluates how accurate the process of the classification is.
 
 ### When to Use LDA  
 
