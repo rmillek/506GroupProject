@@ -43,7 +43,7 @@ colnames(table_data) = c("Number", "Variable Name", "Variable Description")
 knitr::kable(table_data[,1:3], align = 'l')
 ```
   
-It is reasonable to use this data set for LDA firstly because there is a categorical response here, namely the seed variety. In terms of normality, a cursory look at the independent variables indicated that the empirical distributions of the independent varaibles by group were all roughly symmetric. While not perfectly normal, the independent variables by group are close enough to normality that we can make the normality assumption. We also choose to standardize such that the variances of the independent can be considered roughly equal. Hence, this data set appears to be reasonable for our use of LDA.  
+It is reasonable to use this data set for LDA firstly because there is a categorical response here, namely the seed variety. In terms of normality, a cursory look at the independent variables indicated that the empirical distributions of the independent varaibles by group were all roughly symmetric. While not perfectly normal, the independent variables by group are close enough to normality that we can make the normality assumption. We also choose to standardize such that the variances of the independent variables are on the same scale, and doing so makes it such that the variances are close enough to be assumed equal. Hence, this data set appears to be reasonable for our use of LDA.  
 
 ### Analysis
 
