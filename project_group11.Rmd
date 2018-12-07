@@ -258,7 +258,7 @@ Running the code above yields a result of 3, indicating that of the 63 observati
 
 ### SAS
 
-#### Descrition of Data
+#### Description of Data
 
 - Create format for "group" using `proc format` and import data to SAS
 
@@ -309,7 +309,7 @@ proc means data=seeds_original n mean std;
 run;
 ```
 
-K represents Kama; R represnts Rosa; C represnts Canadian. The table below shows the mean of each predictors by different groups. We can notice that several variables have clear differences of means for different groups.
+K represents Kama; R represents Rosa; C represents Canadian. The table below shows the mean of each predictors by different groups. We can notice that several variables have clear differences of means for different groups.
 
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
@@ -379,7 +379,7 @@ There are three groups and seven predictors which indicates that the number of d
 
 $~$
 
-The three tables below provide us more details of the model that we get based on the training dataset. We can know the discriminat coefficients (raw and standardized) and class means of each demension.
+The three tables below provide us more details of the model that we get based on the training dataset. We can know the discriminant coefficients (raw and standardized) and class means of each dimension.
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
 knitr::include_graphics("sas_pics/coef_sas.png")
@@ -393,7 +393,7 @@ knitr::include_graphics("sas_pics/raw_sas.png")
 knitr::include_graphics("sas_pics/class_mean_sas.png")
 ```
 
-The two discrimant functions are (based on the standardized coefficients):
+The two discriminant functions are (based on the standardized coefficients):
 
 $discriminant_1 = 0.838*Area + 0.651*Perimeter + ... + 0.940*Groove$
 
@@ -441,7 +441,7 @@ run;
 knitr::include_graphics("sas_pics/discri_plot.png")
 ```
 
-From the plot above, we can know that two discriminant dimensions can classify three levels of wheat very well. We can notice that "can1" can seperate Rosa from other two groups well and "can2" can seperate Canadian and Rosa well.
+From the plot above, we can know that two discriminant dimensions can classify three levels of wheat very well. We can notice that "can1" can separate Rosa from other two groups well and "can2" can separate Canadian and Rosa well.
 
 ## Conclusions  
 
