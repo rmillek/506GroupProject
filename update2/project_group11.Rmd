@@ -2,22 +2,33 @@
 title: "506 Project: Group 11"
 author: "Alex Kellner, Reed Millek, Zhaobo Wu"
 date: "December 7, 2018"
-output: html_document
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    smooth_scroll: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Linear Discriminant Analysis 
+# Linear Discriminant Analysis 
+
+## Introduction
 
 ### What is Linear Discriminant Analysis?
 
-Linear Discriminant Analysis (LDA) is commonly used as dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications. The goal of LDA is to find discriminant functions that are the linear combination of independent continuous variables that will group two or more categories of the dependent variable the in best possible way. It helps one to examine whether significant differences exist among the groups, in terms of the independent variables. It also evaluates how accurate the process of the classification is.
+Linear Discriminant Analysis (LDA) is a commonly used dimensionality reduction technique in the pre-processing step for pattern-classification and machine learning applications. The goal of LDA is to find discriminant functions that are the linear combination of independent continuous variables that will group two or more categories of the dependent variable in the best possible way. It helps one to examine whether significant differences exist among the groups, in terms of the independent variables. It also evaluates how accurate the process of the classification is.
+
+### When to Use LDA  
+
+Generally speaking, LDA is intended for data sets in which there is a categorical response variable. This allows us to group the observations into categories based on the values of their independent variables. Note that LDA is applicable for classificaiton for data sets when there are two or more groups, based on the categorical response. It should also be noted that under LDA, it is assumed that our independent variables are normally distributed and that the variances of the independent variables are equal.
 
 ### Dataset: Geometric Properties of Wheat Seeds
 
-For our data analysis, we will be using the "Seeds" dataset, found on [UC Irvine's Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/seeds#). This dataset is comprised observations of kernels from 3 different varieties of wheat: Kama, Rosa and Canadian. Each group has randomly selected 70 observations, for a total of 210 observations. Aside from the grouping variable, there are 7 geometrical measurments given to each observation:
+For our data analysis, we will be using the "Seeds" dataset, found on [UC Irvine's Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/seeds#). This dataset is comprised observations of kernels from 3 different varieties of wheat: Kama, Rosa and Canadian. Each group has randomly selected 70 observations, for a total of 210 observations. Aside from the grouping variable, there are 7 geometrical measurements given to each observation:
 
 ```{r warning=FALSE, message=FALSE, echo=FALSE}
 library(ggplot2)
@@ -25,19 +36,37 @@ library(dplyr)
 library(tidyverse)
 table_data = data.frame(var_names = c(1,2,3,4,5,6,7),
                        var_desc = c("area", "peri", "comp", "l", "w", "asym", "lgroove"), 
-                       var_ff = c("Area", "Perimeter","Compactness (C = 4*pi*A/P^2)",
+                       var_ff = c("Area", "Perimeter","Compactness",
                                   "Length of kernel","Width of kernel", "Asymmetry coefficient", 
                                   "Length of kernel groove"))
 colnames(table_data) = c("Number", "Variable Name", "Variable Description")
 knitr::kable(table_data[,1:3], align = 'l')
 ```
   
+It is reasonable to use this data set for LDA firstly because there is a categorical response here, namely the seed variety. In terms of normality, a cursory look at the independent variables yields:  
+```{r, echo = FALSE, message = FALSE}
+library(reshape2)
+seeds = read.csv("./seeds.csv", sep="\t", header=TRUE)
+seeds = seeds[,-8]
+seeds = melt(seeds)
+g = ggplot(seeds,aes(x=value))
+g = g + geom_histogram()
+g = g + facet_wrap(~variable)
+g
+```
+  
+We see that, while not perfectly normal, the independent variables here appear roughly symmetric and are close enough to normality that we can make the normality assumption. We also choose to standardize such that the variances of the independent can be considered roughly equal. Hence, this data set appears to be reasonable for our use of LDA.  
 
-We will be using each qualitative attribute to classify each group, and once a fit model has been obtained, make predicted classifications of other kernels with certain attributes.  
+### Analysis
 
-For this analysis, we present three tutorials, each using a different statisitcal software. The languages presented here are R, STATA, and SAS. Please note that, due to inconsistencies in random number generators across languages, the results might be slightly different in each tutorial, but the core task shown in each program is the same.  
+For this analysis, we present three tutorials, each using a different statisitcal software. The languages presented here are R, STATA, and SAS.  
 
-For more information on this topic, as well as helpful STATA coding tips, visit [UCLA's Institue for Digital Research and Education](https://stats.idre.ucla.edu/stata/output/discriminant-analysis/). Note that the information presented here is attributed to this website.
+For our actual tutorials, we will start by demonstrating how to load the Seeds data in each language and how to display some basic summary statistics. We will then split the data into a training and a test set through randomization, with a roughly 70-30 split. The training set will then be used to estimate (standardized) discriminant functions using the independent variables from the Seeds data set. We can then use the discriminant functions from the training set to classify observations in the test set based on their values for the independent variables. This will allow us to estimate prediction error, as we will compare the predicted classes from the LDA model to the actual classes of observations in the test set.   
+
+
+### Differences Across Langauges
+
+In our analysis, it is necessary to split the data into training and test set; we do this to estimate discriminant functions based on the training data and then apply these functions to the test data to obtain estimated prediction errors. Due to different randomization techniques/mechanisms in the different languages, the training sets and test sets differ in each tutorial. As such, the prediction errors and estimates for the discriminant functions differ across languages. The results are similar, as the core task shown in each tutorial is the same, but the numerical summaries differ somewhat. 
 
 ## Languages {.tabset .tabset-fade}
 
@@ -55,7 +84,7 @@ library(car)
 
 #### Description of Data
 
-After reading in our dataset and grouping our catagorical variable, we can view the summaries of our variables of interest using the `summary` function.
+After reading in our dataset and grouping our categorical variable, we can view the summaries of our variables of interest using the `summary` function.
 
 ```{r summary, echo=TRUE}
 seeds = read.csv("./seeds.csv", sep="\t", header=TRUE)
@@ -137,7 +166,7 @@ As we see from the table, only 1 of the 63 observations in our test data was inc
 
 #### Description of Data
 
-Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is so additional step to perform there. We then obtain some summary statistics with "summary" to get an intial understanding of the data with which we will be working: 
+Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is no additional step to perform there. We then obtain some summary statistics with "summary" to get an intial understanding of the data with which we will be working: 
 ```{}
 // import the seeds data from local directory, relabel, and summarize
 import delimited seeds.csv
@@ -419,9 +448,14 @@ knitr::include_graphics("plot_da.png")
 
 From the plot, we can know that two discriminant dimensions can classify groups very well. We can notice that "can1" can seperate group 2 from other two groups and "can2" can seperate group 1 and group 3 well.
 
+## Conclusions  
+
+In all three languages, even with the differences in training set and test set, we saw low estimated prediction errors. For SAS and STATA, there were only 3 of 63 seeds misclassified in their respective test sets, and there was only 1 seed misclassified for the R test set. It should also be noted that in all three languages, we found that the first discriminant function appeared to separate Rosa seeds from the other to seeds well, but did not separate the Canadian and Kama seeds. On the other hand, the second LDA function appeared to separate Canadian and Kama seeds well, but not Canadian and Rosa seeds. In any case, it appears that LDA performed reasonably well at classifying the seeds.
+
 ## References
 
 1. [Wikipedia](https://en.wikipedia.org/wiki/Linear_discriminant_analysis)
 2. [Medium: Towards Data Science](https://towardsdatascience.com/is-lda-a-dimensionality-reduction-technique-or-a-classifier-algorithm-eeed4de9953a)
 3. [DataCamp: Quick-R](https://www.statmethods.net/advstats/discriminant.html)
 4. [StatSoft](http://www.statsoft.com/textbook/discriminant-function-analysis)
+5. [UCLA IDRE](https://stats.idre.ucla.edu/stata/output/discriminant-analysis/)
