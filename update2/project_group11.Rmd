@@ -189,7 +189,8 @@ graph matrix area peri comp l w asym lgroove
 knitr::include_graphics("stata_pics/cor_stata.png")
 ```
   
-We see some strong correlations in the predictors, as there are several pairs of explanatory variables that have a reasonbly strong, approximately linear correlation.    
+We see some strong correlations in the predictors, as there are several pairs of explanatory variables that have a reasonably strong, approximately linear correlation.   
+
 We should note that the idea of the linear disciminant analysis (LDA) in this analysis is primarily classification. We are hoping to find linear combinations of the 7 potential predictors in the data set that yield the best possible separation among seeds based on their wheat variety. In other words, we want the best separation such that each group of seeds can be identified based on their other characteristics.
 
 Note that we want to separate the seeds by their wheat variety. There are three possible wheat varieties, so the number of groups here is 3, and the number of possible predictors is 7. Since the maximum number of significant discriminant functions that we can have is the minimum of "number of groups minus one" and "number of predictiors", there are at most two discriminant functions that can be used to classify the seeds in this analysis.
