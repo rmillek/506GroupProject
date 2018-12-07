@@ -227,7 +227,7 @@ $$4.888*Area+-4.471*Perimeter...+1.598*Groove$$
   
 The other tables in the "candisc" output yield means and classification percentages (i.e. the proportion classified correctly) for the training data. 
 
-Now, to visualize the separation, we use the function "scoreplot." This function displays the test data, with the first discriminant function on the x-axis and the second discriminant function on the y-axis. The observations are then labeled according to seed type. To make the output more readable, we use the "label"" function to relabel the observations such that they are only displayed as the first letter of the seed variety (i.e. "C" for Canadian). We then have:
+Now, to visualize the separation, we use the function "scoreplot." This function displays the test data, with the first discriminant function on the x-axis and the second discriminant function on the y-axis. The observations are then labeled according to seed type. To make the output more readable, we use the "label" function to relabel the observations such that they are only displayed as the first letter of the seed variety (i.e. "C" for Canadian). We then have:
 
 ```{}
 // change labels for future plotting
