@@ -362,7 +362,7 @@ $~$
 
 ```{}
 /* analysis */
-proc discrim data=seeds_train testdata=seeds_test testout=fake_out out=discrim_out can;
+proc discrim data=seeds_train testdata=seeds_test testout=test_out out=discrim_out can;
   class group;
   var area peri comp l w asym igroove;
 run;
@@ -414,7 +414,7 @@ $~$
 ```{}
 /* making plot */
 data plotclass;
-  merge fake_out discrim_out;
+  merge test_out discrim_out;
 run;
 
 proc template;
