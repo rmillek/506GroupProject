@@ -54,7 +54,7 @@ For this analysis, we present three tutorials, each using a different statistica
 For our actual tutorials, we will start by demonstrating how to load the Seeds data in each language and how to display some basic summary statistics. We will then split the data into a training and a test set through randomization, with a roughly 70-30 split. The training set will then be used to estimate discriminant functions using the independent variables from the Seeds data set. We can then use the discriminant functions from the training set to classify observations in the test set based on their values for the independent variables. This will allow us to estimate prediction error, as we will compare the predicted classes from the LDA model to the actual classes of observations in the test set.   
 
 
-### Differences Across Langauges
+### Differences Across Languages
 
 In our analysis, it is necessary to split the data into training and test set; we do this to estimate discriminant functions based on the training data and then apply these functions to the test data to obtain estimated prediction errors. Due to different randomization techniques/mechanisms in the different languages, the training sets and test sets differ in each tutorial. As such, the prediction errors and estimates for the discriminant functions differ across languages. The results are similar, as the core task shown in each tutorial is the same, but the numerical summaries differ somewhat. 
 
@@ -110,7 +110,7 @@ lseeds
 This means that the first discriminant function is a linear combination of the variables: $$0.166*Area+3.300*Perimeter+...+3.144*Groove$$.
 and the second is : $$4.623*Area-9.244*Perimeter+...+6.846*Groove$$
 
-We can also see what standardize our data as such:
+The `lda` function in R doesn't automatically standardize the coefficients in each function. We can see what the standardized functions look like using the `candisc` function:
 
 ```{r standard, echo=TRUE}
 x=lm(cbind(area,peri,comp,l,w,Asym,lgroove)~group, train)
