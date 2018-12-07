@@ -372,7 +372,7 @@ run;
 knitr::include_graphics("sas_pics/test_sas.png")
 ```
 
-There are three groups which indicates that the number of discriminant dimensions is $3-1 = 2$ which is smaller than the number of predictors. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
+There are three groups and seven predictors which indicates that the number of discriminant dimensions is $3-1 = 2$. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
 
 
 $~$
