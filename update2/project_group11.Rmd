@@ -24,7 +24,7 @@ Linear Discriminant Analysis (LDA) is one of the most commonly used techniques n
 
 ### When to Use LDA  
 
-Generally speaking, LDA is intended for data sets in which there is a categorical response variable. This allows us to group the observations into categories based on the values of their independent variables. Note that LDA is applicable for classificaiton for data sets when there are two or more groups, based on the categorical response. It should also be noted that under LDA, it is assumed that our independent variables are multivariate normally distributed and that the variances of the independent variables are equal.
+Generally speaking, LDA is intended for data sets in which there is a categorical response variable. This allows us to group the observations into categories based on the values of their independent variables. Note that LDA is applicable for classification for data sets when there are two or more groups, based on the categorical response. It should also be noted that under LDA, it is assumed that our independent variables are multivariate normally distributed and that the variances of the independent variables are equal.
 
 ### Dataset: Geometric Properties of Wheat Seeds
 
