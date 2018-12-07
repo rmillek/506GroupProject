@@ -28,7 +28,7 @@ Generally speaking, LDA is intended for data sets in which there is a categorica
 
 ### Dataset: Geometric Properties of Wheat Seeds
 
-For our data analysis, we will be using the "Seeds" dataset, found on [UC Irvine's Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/seeds#). This dataset is comprised observations of kernels from 3 different varieties of wheat: Kama, Rosa and Canadian. Each group has randomly selected 70 observations, for a total of 210 observations. Aside from the grouping variable, there are 7 geometrical measurements given to each observation:
+For our data analysis, we will be using the "Seeds" dataset, found on [UC Irvine's Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/seeds#). This dataset includes observations from 3 different varieties of wheat: Kama, Rosa and Canadian. Each group has randomly selected 70 observations, for a total of 210 observations. Aside from the grouping variable, there are 7 geometrical measurements given to each observation:
 
 ```{r warning=FALSE, message=FALSE, echo=FALSE}
 library(ggplot2)
