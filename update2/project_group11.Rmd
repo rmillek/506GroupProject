@@ -175,7 +175,7 @@ summarize area peri comp l w asym lgroove
 ```
   
 ```{r echo=FALSE}
-knitr::include_graphics("sum_stata.png")
+knitr::include_graphics("stata_pics/sum_stata.png")
 ```
   
 Next, we create a matrix of graphs of correlations using "graph matrix" to see correlations between the potential explanatory variables to gain an initial understanding of how they are related:  
@@ -186,7 +186,7 @@ graph matrix area peri comp l w asym lgroove
 ```
   
 ```{r echo=FALSE}
-knitr::include_graphics("cor_stata.png")
+knitr::include_graphics("stata_pics/cor_stata.png")
 ```
   
 We see some strong correlations in the predictors, as there are several pairs of explanatory variables that have a reasonbly strong, approximately linear correlation.    
@@ -223,8 +223,8 @@ candisc area peri comp l w asym lgroove, group(group)
 ```
   
 ```{r echo=FALSE}
-knitr::include_graphics("lda_stata1.png")
-knitr::include_graphics("lda_stata2.png")
+knitr::include_graphics("stata_pics/lda_stata1.png")
+knitr::include_graphics("stata_pics/lda_stata2.png")
 ```
   
 As seen above, STATA provides a considerable amount of output for the LDA Analysis from the function "candisc." For our purposes here, the tables we are most concerned with are the "Canonical Linear Discriminant Analysis" table and the "Standardized canonical discriminant function coefficients" table. The "Canonical Linear Discriminant Analysis" table indicates how many discriminant functions are necessary here, and the "Standardized canonical discriminant function coefficients" table yields the (standardized) coefficient estimates for our LDA functions. We see from the first table that there are two discriminant dimensions, and the F-ratio tests both are significant. This indicates that both dimensions are needed to describe the differences between the seeds.  
@@ -247,7 +247,7 @@ scoreplot, msymbol(i)
 ```
 
 ```{r echo=FALSE}
-knitr::include_graphics("test_stata.png")
+knitr::include_graphics("stata_pics/test_stata.png")
 ```
   
 We see that the first discriminant function appears to separate Rosa seeds from the other types well, though it does not seems to separate Canadian and Kama seeds very much.  
