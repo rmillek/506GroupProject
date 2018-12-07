@@ -185,7 +185,7 @@ Note that we want to separate the seeds by their wheat variety. There are three 
 
 #### Train/Test Sequence
 
-To perform an LDA analysis, it is necessary to split the data into a training set and a test set such that the performance of the LDA functions can be measured. To do this, we select random entries from the data set such that 70% of the data can be used for training and the remaining 30% can be used for testing. We use "generate random" and "sort random" followed by "generate trainsamp" to obtain random indices in create a training set composed of 70% of the data, saving the remaining 30% separately into a test set:
+To perform an LDA analysis, it is necessary to split the data into a training set and a test set such that the performance of the LDA functions can be measured. To do this, we select random entries from the data set such that 70% of the data can be used for training and the remaining 30% can be used for testing. We use "generate random" and "sort random" followed by "generate trainsamp" to obtain random indices in order to create a training set composed of 70% of the data, saving the remaining 30% separately into a test set:
   
 ```{}
 // separate into training and test set
