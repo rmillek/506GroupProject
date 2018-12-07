@@ -155,7 +155,7 @@ As we see from the table, only 1 of the 63 observations in our test data was inc
 
 #### Description of Data
 
-Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is no additional step to perform there. We then obtain some summary statistics with "summary" to get an intial understanding of the data with which we will be working: 
+Now, we perform our analysis using STATA. First, we read in the Seeds data set, using "import delimited." The dataset is already processed, so there is no additional step to perform there. We then obtain some summary statistics with "summarize" to get an intial understanding of the data with which we will be working: 
 ```{}
 // import the seeds data from local directory, relabel, and summarize
 import delimited seeds.csv
