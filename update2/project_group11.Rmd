@@ -96,7 +96,7 @@ scatterplotMatrix(seeds[1:7])
 
 We notice through the scatterplot matrix that some variables are collinear with each other, especially the variables `area` and `peri` with `l` and `w`. This makes sense intuitively, as we use length and width to find the area and perimeter. Normally this would be a problem, but as our goal is to use all given data for classification purposes only, then as long as we achieve high accuracy on our testing procedure, we can ignore this issue.
 
-The purpose of LDA in this example is to find the linear combinations of the original variables that gives the best possible separation to easily distinguish the groups in our data set. In finding how many conbinations are needed to best differentiate our classifications, we take the number of groups and variables into account. The number of groups is $G=3$, and the number of variables is $v=7$. The greatest amouont of useful discriminant functions that can separate the wheat types by geometric properties is the lesser of $G-1$ and $v$. In this case it is the lesser of 2 and 7, so we should find 2 useful discriminant functions to classify our wheat types.
+We want to find the linear combinations of the variables which can provide the best possible separation to the three levels in the variable `group`. In finding how many conbinations are needed to best differentiate our classifications, we take the number of groups and variables into account. The number of groups is $G=3$, and the number of variables is $v=7$. The greatest amouont of useful discriminant functions that can separate the wheat types by geometric properties is the lesser of $G-1$ and $v$. In this case it is the lesser of 2 and 7, so we should find 2 useful discriminant functions to classify our wheat types.
 
 #### Train/Test Sequence
 
@@ -147,7 +147,7 @@ p <- ggplot(data=plot.data, aes(x=LD1, y=LD2)) +
 p
 ```
 
-We can easily see the separation of wheat types from the scatterplot. The first discriminant function (x-axis) separates Rosa from the other types very well, but does not perfectly separate Kama and Canadian. The second discriminant function (y-axis) shows a good separation of Kama and Canadian, a fair separation of Rosa and Kama, and very little separation of Rosa and Canadian. To achieve the best separation of the three types, we should use both the first and second discriminant functions together.
+We can easily see the separation of wheat types from the scatterplot. The first discriminant function (LD1) separates Rosa from the other types very well, but does not perfectly separate Kama and Canadian. The second discriminant function (LD2) shows a good separation of Kama and Canadian, a fair separation of Rosa and Kama, and very little separation of Rosa and Canadian. In order to have the best separation of the three types of wheat, we should use both the first discriminant function and the second discriminant function based on these findings.
 
 Now we can check the error rate of our classification test:
 
@@ -266,7 +266,9 @@ Running the code above yields a result of 3, indicating that of the 63 observati
 
 ### SAS
 
-#### Import data to SAS
+#### Descrition of Data
+
+- Create format for "group" using `proc format` and import data to SAS
 
 ```{}
 /* file name */
@@ -287,11 +289,7 @@ data seeds_original;
 run;
 ```
 
-$~$
-
-#### Descrition of Data
-
-- Summary of the dataset
+- Summary of the dataset (using `proc means` statement)
 
 ```{}
 /* summary of the dataset*/
@@ -309,7 +307,7 @@ There are 210 observations and 7 predictors in the whole dataset.
 
 $~$
 
-- Summary of training dataset by group
+- Summary of training dataset by group (using `proc means` statement)
 
 ```{}
 /* summary of the dataset by group*/
@@ -328,7 +326,7 @@ knitr::include_graphics("sas_pics/bymean_sas.png")
 
 $~$
 
-- Correlation between predictors
+- Correlation between predictors (using `proc corr` statement)
 
 ```{}
 /* correlation table */
@@ -347,7 +345,7 @@ $~$
 
 #### Train/Test Sequence
 
-- Using "train and test split" with ratio 70:30 to create training and testing datasets:
+- Using `proc surveyselect` statement to do "train and test split" with ratio 70:30 to create training and testing datasets. We use training dataset to get discriminant function and then use testset to do classification and test the performance of the model.
 
 ```{}
 /* train and test split by group */
@@ -370,7 +368,7 @@ run;
 
 $~$
 
-#### Discriminant Analysis (using "discrim" function)
+#### Discriminant Analysis (using `proc discrim` statement)
 
 ```{}
 /* analysis */
@@ -421,6 +419,8 @@ $~$
 
 #### Plot the classification
 
+- making plot using `proc sgrender` statement
+
 ```{}
 /* making plot */
 data plotclass;
@@ -453,7 +453,7 @@ From the plot, we can know that two discriminant dimensions can classify groups 
 
 ## Conclusions  
 
-In all three languages, even with the differences in training set and test set, we saw low estimated prediction errors. For SAS and STATA, there were only 3 of 63 seeds misclassified in their respective test sets, and there was only 1 seed misclassified for the R test set. It should also be noted that in all three languages, we found that the first discriminant function appeared to separate Rosa seeds from the other to seeds well, but did not separate the Canadian and Kama seeds. On the other hand, the second LDA function appeared to separate Canadian and Kama seeds well, but not Canadian and Rosa seeds. In any case, it appears that LDA performed reasonably well at classifying the seeds.
+In all three languages, even with the differences in training set and test set, we saw low estimated prediction errors. For STATA, there were only 3 of 63 seeds misclassified in the test sets. For SAS, there were only 2 of 63 seeds misclassified in the test sets. There was only 1 seed misclassified for the R test set. It should also be noted that in all three languages, we found that the first discriminant function appeared to separate Rosa seeds from the other to seeds well, but did not separate the Canadian and Kama seeds. On the other hand, the second LDA function appeared to separate Canadian and Kama seeds well, but not Canadian and Rosa seeds. In any case, it appears that LDA performed reasonably well at classifying the seeds.
 
 ## References
 
@@ -463,3 +463,4 @@ In all three languages, even with the differences in training set and test set, 
 4. [StatSoft](http://www.statsoft.com/textbook/discriminant-function-analysis)
 5. [UCLA IDRE STATA](https://stats.idre.ucla.edu/stata/output/discriminant-analysis/)
 6. [UCLA IDRE SAS](https://stats.idre.ucla.edu/sas/dae/discriminant-function-analysis/)
+
