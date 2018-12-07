@@ -2,8 +2,8 @@
 
 Group 11: Alex Kellner, Reed Millek, Zhaobo Wu
 
-Topic: linear discriminant analysis
+Topic: linear discriminant analysis (LDA)
 
-Dataset: https://archive.ics.uci.edu/ml/datasets/seeds
+Dataset source: https://archive.ics.uci.edu/ml/datasets/seeds
 
 Languages: R, STATA, SAS
