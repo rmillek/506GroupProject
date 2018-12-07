@@ -453,4 +453,5 @@ In all three languages, even with the differences in training set and test set, 
 4. [StatSoft](http://www.statsoft.com/textbook/discriminant-function-analysis)
 5. [UCLA IDRE STATA](https://stats.idre.ucla.edu/stata/output/discriminant-analysis/)
 6. [UCLA IDRE SAS](https://stats.idre.ucla.edu/sas/dae/discriminant-function-analysis/)
+7. [Rstudio, Gabriel Martos](https://rstudio-pubs-static.s3.amazonaws.com/35817_2552e05f1d4e4db8ba87b334101a43da.html)
 
