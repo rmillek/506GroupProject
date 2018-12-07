@@ -270,92 +270,102 @@ Running the code above yields a result of 3, indicating that of the 63 observati
 
 ```{}
 /* file name */
-filename seeds '~/stat506/project/seeds_dataset.txt';
+filename seeds '~/stat506/project/seeds.csv';
+
+/* format for grouping variable */
+proc format;
+	value group_f 1 = 'K' 
+				  2 = 'R'
+				  3	= 'C';
+run;
 
 /* import data */
 data seeds_original;
-	infile seeds delimiter = '	' MISSOVER;
-	input area peri comp l w asym igroove group;
+	infile seeds delimiter = '	' MISSOVER firstobs=2;
+	input area peri comp l w asym lgroove group;
+	format group group_f.;
 run;
 ```
 
 $~$
 
-#### Train/Test
+#### Descrition of Data
 
-- Using "train and test split" with ratio 7:3 to create training and testing datasets:
+- Summary of the dataset
+
+```{}
+/* summary of the dataset*/
+proc means data=seeds_original n mean std min max;
+  var area peri comp l w asym lgroove;
+run;
+```
+
+
+```{r echo=FALSE, out.width = '60%', fig.align='center'}
+knitr::include_graphics("sas_pics/mean_sas.png")
+```
+
+There are 210 observations and 7 predictors in the whole dataset.
+
+$~$
+
+- Summary of training dataset by group
+
+```{}
+/* summary of the dataset by group*/
+proc means data=seeds_original n mean std;
+  class group;
+  var area peri comp l w asym lgroove;
+run;
+```
+
+K represents Kama; R represnts Rose; C represnts Canadian. The table below shows the mean of each predictors by different groups. We can notice that several variables have clear differences of means for different groups.
+
+
+```{r echo=FALSE, out.width = '40%', fig.align='center'}
+knitr::include_graphics("sas_pics/bymean_sas.png")
+```
+
+$~$
+
+- Correlation between predictors
+
+```{}
+/* correlation table */
+proc corr data=seeds_original;
+  var area peri comp l w asym lgroove;
+run;
+```
+
+```{r echo=FALSE, out.width = '50%', fig.align='center'}
+knitr::include_graphics("sas_pics/cor_sas.png")
+```
+
+According to the correlation table above, we can notice that most predictors have strong correlations with each other in this dataset.
+
+$~$
+
+#### Train/Test Sequence
+
+- Using "train and test split" with ratio 70:30 to create training and testing datasets:
 
 ```{}
 /* train and test split by group */
 proc surveyselect data=seeds_original rate=.3 outall out=seeds_select;
 	strata group;
 run;
-
 /* training set*/
 data seeds_train;
 	set seeds_select;
 	where Selected = 0;
 	drop Selected SelectionProb SamplingWeight;
 run;
-
 /* testing set*/
 data seeds_test;
 	set seeds_select;
 	where Selected = 1;
 	drop Selected SelectionProb SamplingWeight;
 run;
-```
-
-$~$
-
-#### Summary of training dataset
-
-```{}
-/* summary of training dataset*/
-proc means data=seeds_train n mean std min max;
-  var area peri comp l w asym igroove;
-run;
-```
-
-
-```{r echo=FALSE, out.width = '60%', fig.align='center'}
-knitr::include_graphics("train_sum.png")
-```
-
-There are 147 observations in the training dataset.
-
-$~$
-
-#### Summary of training dataset by group
-
-```{}
-/* summary of training dataset by group*/
-proc means data=seeds_train n mean std;
-  class group;
-  var area peri comp l w asym igroove;
-run;
-```
-
-Group 1 is Kama; Group 2 is Rose; Group 3 is Canadian. The table below shows the mean of each predictors by different groups. Several variables have clear differences of means for different groups.
-
-
-```{r echo=FALSE, out.width = '40%', fig.align='center'}
-knitr::include_graphics("train_sum_group.png")
-```
-
-$~$
-
-#### Correlation between predictors
-
-```{}
-/* correlation */
-proc corr data=seeds_train;
-  var area peri comp l w asym igroove;
-run;
-```
-
-```{r echo=FALSE, out.width = '50%', fig.align='center'}
-knitr::include_graphics("cor.png")
 ```
 
 $~$
@@ -371,7 +381,7 @@ run;
 ```
 
 ```{r echo=FALSE, out.width = '100%', fig.align='center'}
-knitr::include_graphics("a_1.png")
+knitr::include_graphics("sas_pics/test_sas.png")
 ```
 
 There are three groups which indicates that the number of discriminant dimensions is 3-1 which is 2. The two discriminant dimensions are both statistically significant based on the table above (P values of the F-tests are very small). As a result, both dimensions are very useful to describe the differences between the groups of seeds. The canonical correlations for the two dimensions are 0.93 and 0.87.
@@ -382,37 +392,29 @@ $~$
 The four tables below provide us more details of the model that we get based on the training dataset. We can know the discriminat coefficients (raw and standardized) and class means of each demension.
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
-knitr::include_graphics("a_7.png")
+knitr::include_graphics("sas_pics/coef_sas.png")
 ```
 
 ```{r echo=FALSE, out.width = '30%', fig.align='center'}
-knitr::include_graphics("a_8.png")
+knitr::include_graphics("sas_pics/raw_sas.png")
 ```
 
 ```{r echo=FALSE, out.width = '30%', fig.align='center'}
-knitr::include_graphics("a_9.png")
-```
-
-```{r echo=FALSE, out.width = '35%', fig.align='center'}
-knitr::include_graphics("a_10.png")
+knitr::include_graphics("sas_pics/class_mean_sas.png")
 ```
 
 The two discrimant functions are (based on the standardized coefficients):
 
-$discriminant_1 = -0.301*Area + 0.379*Perimeter + ... + 0.821*Groove$
+$discriminant_1 = 0.838*Area + 0.651*Perimeter + ... + 0.940*Groove$
 
-$discriminant_2 = 4.103*Area + -4.631*Perimeter + ... + 1.694*Groove$
+$discriminant_2 = 4.310*Area + -4.142*Perimeter + ... + 1.360*Groove$
 
 $~$
 
-The two tables below are the summary tables of training and tesing dataset. Based on these two tables, we can notice that the training error and testing error are both very small. The accuracy is almost 1. The model predicts the data well.
+The table below is the summary tables of the tesing dataset. There are 63 observations in this dataset. Based on this table, we can notice that only two oberservations are classified incorrectly and the testing error are is very small. The accuracy is almost 1. The model that we have predicts the testing data very well.
 
 ```{r echo=FALSE, out.width = '40%', fig.align='center'}
-knitr::include_graphics("a_5.png")
-```
-
-```{r echo=FALSE, out.width = '40%', fig.align='center'}
-knitr::include_graphics("a_4.png")
+knitr::include_graphics("sas_pics/test_table.png")
 ```
 
 $~$
@@ -420,7 +422,7 @@ $~$
 #### Plot the classification
 
 ```{}
-/* plot */
+/* making plot */
 data plotclass;
   merge fake_out discrim_out;
 run;
@@ -439,11 +441,12 @@ proc template;
 run;
 
 proc sgrender data = plotclass template = classify;
+	title "Discriminant function score";
 run;
 ```
 
 ```{r echo=FALSE, out.width = '70%', fig.align='center'}
-knitr::include_graphics("plot_da.png")
+knitr::include_graphics("sas_pics/discri_plot.png")
 ```
 
 From the plot, we can know that two discriminant dimensions can classify groups very well. We can notice that "can1" can seperate group 2 from other two groups and "can2" can seperate group 1 and group 3 well.
