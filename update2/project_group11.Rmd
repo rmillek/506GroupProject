@@ -458,4 +458,5 @@ In all three languages, even with the differences in training set and test set, 
 2. [Medium: Towards Data Science](https://towardsdatascience.com/is-lda-a-dimensionality-reduction-technique-or-a-classifier-algorithm-eeed4de9953a)
 3. [DataCamp: Quick-R](https://www.statmethods.net/advstats/discriminant.html)
 4. [StatSoft](http://www.statsoft.com/textbook/discriminant-function-analysis)
-5. [UCLA IDRE](https://stats.idre.ucla.edu/stata/output/discriminant-analysis/)
+5. [UCLA IDRE STATA](https://stats.idre.ucla.edu/stata/output/discriminant-analysis/)
+6. [UCLA IDRE SAS](https://stats.idre.ucla.edu/sas/dae/discriminant-function-analysis/)
