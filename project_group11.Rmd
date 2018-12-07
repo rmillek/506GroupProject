@@ -299,7 +299,7 @@ There are 210 observations and 7 predictors in the whole dataset.
 
 $~$
 
-- Summary of training dataset by group (using `proc means` statement)
+- Summary of dataset by group (using `proc means` statement)
 
 ```{}
 /* summary of the dataset by group*/
