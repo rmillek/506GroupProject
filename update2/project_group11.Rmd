@@ -24,7 +24,7 @@ Linear Discriminant Analysis (LDA) is one of the most commonly used techniques n
 
 ### When to Use LDA  
 
-Generally speaking, LDA is intended for data sets in which there is a categorical response variable. This allows us to group the observations into categories based on the values of their independent variables. Note that LDA is applicable for classification for data sets when there are two or more groups, based on the categorical response. It should also be noted that under LDA, it is assumed that our independent variables are multivariate normally distributed and that the variances of the independent variables are equal.
+Generally speaking, LDA is intended for data sets in which there is a categorical response variable. This allows us to group the observations into categories based on the values of their independent variables. Note that LDA is applicable for classification for data sets when there are two or more groups, based on the categorical response. It should also be noted that under LDA, it is assumed that our independent variables are multivariate normally distributed by group and that the variances of the independent variables are equal.
 
 ### Dataset: Geometric Properties of Wheat Seeds
 
@@ -43,19 +43,7 @@ colnames(table_data) = c("Number", "Variable Name", "Variable Description")
 knitr::kable(table_data[,1:3], align = 'l')
 ```
   
-It is reasonable to use this data set for LDA firstly because there is a categorical response here, namely the seed variety. In terms of normality, a cursory look at the independent variables yields:  
-```{r, echo = FALSE, message = FALSE}
-library(reshape2)
-seeds = read.csv("./seeds.csv", sep="\t", header=TRUE)
-seeds = seeds[,-8]
-seeds = melt(seeds)
-g = ggplot(seeds,aes(x=value))
-g = g + geom_histogram()
-g = g + facet_wrap(~variable)
-g
-```
-  
-We see that, while not perfectly normal, the independent variables here appear roughly symmetric and are close enough to normality that we can make the normality assumption. We also choose to standardize such that the variances of the independent can be considered roughly equal. Hence, this data set appears to be reasonable for our use of LDA.  
+It is reasonable to use this data set for LDA firstly because there is a categorical response here, namely the seed variety. In terms of normality, a cursory look at the independent variables indicated that the empirical distributions of the independent varaibles by group were all roughly symmetric. While not perfectly normal, the independent variables by group are close enough to normality that we can make the normality assumption. We also choose to standardize such that the variances of the independent can be considered roughly equal. Hence, this data set appears to be reasonable for our use of LDA.  
 
 ### Analysis
 
